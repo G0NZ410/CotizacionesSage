@@ -1,9 +1,11 @@
+-- DROP DATABASE sagemanagmentdb;
 CREATE DATABASE sagemanagmentdb;
 
 use sagemanagmentdb;
 
 CREATE TABLE IF NOT EXISTS usuario(
-    user VARCHAR (20) PRIMARY KEY,
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    user VARCHAR (20),
     pass VARCHAR (100),
     firma LONGBLOB,
     estatus VARCHAR (10),
@@ -12,8 +14,8 @@ CREATE TABLE IF NOT EXISTS usuario(
     rfcAdm VARCHAR (13),
     dominio VARCHAR (30),
     direccionAdm TEXT,
-    telAdm1 INT (20),
-    telAdm2 INT (20),
+    telAdm1 INT,
+    telAdm2 INT,
     UNIQUE (user)
 );
 
@@ -21,16 +23,16 @@ CREATE TABLE IF NOT EXISTS cliente(
     idCliente INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     nombreCliente VARCHAR (100) NOT NULL,
     RFC VARCHAR (13),
-    calle VARCHAR (30),
+    calle VARCHAR (50),
     numExt INT (6),
     numInt VARCHAR (6),
     colonia VARCHAR (30),
     delMun VARCHAR (30),
-    ciudad VARCHAR (30),
+    ciudad VARCHAR (50),
     pais VARCHAR (30),
     cp INT (5),
-    telCont INT (20),
-    telHosp INT (20),
+    telCont VARCHAR (20),
+    telHosp VARCHAR (20),
     email VARCHAR (30),
     ateDirec VARCHAR (50),
     cargo VARCHAR (30),
@@ -55,7 +57,10 @@ CREATE TABLE IF NOT EXISTS ordenes(
     usuarioFirma LONGBLOB,
     mantBiomAdm LONGBLOB,
     sello LONGBLOB,
-    FOREIGN KEY (idCliente) REFERENCES cliente(idCliente)
+    user_id INT,
+    created_at timestamp NOT NULL DEFAULT current_timestamp,
+    CONSTRAINT fk_cliente FOREIGN KEY (idCliente) REFERENCES cliente(idCliente),
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES usuario(id)
 );
 
 CREATE TABLE IF NOT EXISTS ordenes_equipo(

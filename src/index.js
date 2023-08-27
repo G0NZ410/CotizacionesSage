@@ -33,10 +33,12 @@ app.use(require('./routes'));
 app.use(require('./routes/authentication'));
 
 //Public
-app.use(express.static(path.join(__dirname, 'public')))
-
+app.use(express.static(path.join(__dirname, 'public')));
 
 //Starting the server
 app.listen(app.get('port'), () => {
     console.log(`Server on port ${app.get('port')}`);
 });
+
+
+//REVISAR PORQUE NO ESTA HACIENDO CONEXION CON LA BASE DE DATOS
